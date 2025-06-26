@@ -4,16 +4,16 @@ namespace PaginaCafe.Models
 {
     public class Usuario
     {
-        private String id;
-        private String NombreCompleto;
-        private String email;
-        private String password;
-        private String telefono;
-        private String mensaje;
-        private List<Pedido> pedidos;
-        private List<Carrito> carritos;
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public string Email { get; set; }
+        public string Contrasena { get; set; }  // Ojo: guardar hash en producción
 
+        // Un usuario puede tener 0 o 1 carrito activo
+        public Carrito Carrito { get; set; }
 
+        // Un usuario puede tener muchos pedidos
+        public ICollection<Pedido> Pedidos { get; set; }
     }
-}                                                           
+}
                         

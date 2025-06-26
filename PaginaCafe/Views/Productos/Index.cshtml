@@ -1,0 +1,56 @@
+﻿@model List<PaginaCafe.Models.Producto>
+
+<h1>Productos disponibles</h1>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensaje"]</div>
+}
+
+<div class="row">
+    @foreach (var producto in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="@producto.Imagen" class="card-img-top" alt="@producto.Nombre" />
+                <div class="card-body">
+                    <h5 class="card-title">@producto.Nombre</h5>
+                    <p class="card-text">@producto.Descripcion</p>
+                    <p><strong>$@producto.Precio</strong></p>
+
+                    <button class="btn btn-primary" onclick="agregarAlCarrito(@producto.Id)">Elegir</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        async function agregarAlCarrito(productoId) {
+            const usuarioId = localStorage.getItem('usuarioId');
+            if (!usuarioId) {
+                alert('Debes iniciar sesión para agregar productos al carrito.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/Productos/Elegir', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: productoId, usuarioId: parseInt(usuarioId) })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    alert(data.mensaje);
+                } else {
+                    alert('Error al agregar el producto.');
+                }
+            } catch (error) {
+                alert('Error en la conexión con el servidor.');
+                console.error(error);
+            }
+        }
+    </script>
+}

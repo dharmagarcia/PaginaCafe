@@ -3,10 +3,15 @@
     public class Carrito
     {
 
-        private String carritoId;
-        private int cantidad;
-        private Pago pago;
-        private List<Producto> productos;
-        private CarritoItem items;
+        public int Id { get; set; }
+
+        // Foreign key a Usuario
+        public int UsuarioId { get; set; }
+        public Usuario Usuario { get; set; }
+
+        public DateTime FechaCreacion { get; set; }
+
+        // Items del carrito
+        public ICollection<CarritoItem> CarritoItems { get; set; }
     }
 }

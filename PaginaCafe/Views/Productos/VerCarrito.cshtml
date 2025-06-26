@@ -1,0 +1,62 @@
+﻿@model PaginaCafe.Models.Carrito
+
+@{
+    ViewData["Title"] = "Tu Carrito";
+}
+
+<h2>Tu carrito</h2>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensaje"]</div>
+}
+
+@if (Model.CarritoItems == null || !Model.CarritoItems.Any())
+{
+    <p>Tu carrito está vacío.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CarritoItems)
+            {
+                <tr>
+                    <td>@item.Producto.Nombre</td>
+                    <td>@item.Cantidad</td>
+                    <td>$@item.Producto.Precio</td>
+                    <td>$@(item.Cantidad * item.Producto.Precio)</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                <td>
+                    $@Model.CarritoItems.Sum(ci => ci.Cantidad * ci.Producto.Precio)
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <form id="pedidoForm" method="post">
+        <input type="hidden" id="usuarioIdPedido" name="usuarioId" />
+        <button type="submit" class="btn btn-success">Realizar Pedido</button>
+    </form>
+}
+
+@section Scripts {
+    <script>
+        // Cargar el ID del usuario en el formulario
+        document.getElementById('usuarioIdPedido').value = localStorage.getItem('usuarioId');
+    </script>
+}
+
