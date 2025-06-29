@@ -27,7 +27,6 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" href="#" onclick="irAlCarrito()">Ver carrito</a>
                         </li>
-
                     </ul>
                 </div>
             </div>
@@ -38,7 +37,6 @@
         <!-- Sección de login -->
         <div id="loginSection" class="mb-3">
             <input type="text" id="inputUsuarioNombre" placeholder="Nombre usuario" class="form-control mb-2" style="max-width:300px;" />
-            <input type="number" id="inputUsuarioId" placeholder="ID usuario" class="form-control mb-2" style="max-width:300px;" />
             <button class="btn btn-primary" onclick="login()">Iniciar sesión</button>
         </div>
 
@@ -62,20 +60,16 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-    <!-- Script de login JS -->
     <script>
         function login() {
-            const nombre = document.getElementById('inputUsuarioNombre').value;
-            const id = document.getElementById('inputUsuarioId').value;
+            const nombre = document.getElementById('inputUsuarioNombre').value.trim();
 
-            if (nombre && id) {
+            if (nombre) {
                 localStorage.setItem('usuarioNombre', nombre);
-                localStorage.setItem('usuarioId', id);
-
                 document.getElementById('loginSection').style.display = 'none';
                 mostrarUsuario();
             } else {
-                alert('Por favor, completá ambos campos.');
+                alert('Por favor, ingresá tu nombre.');
             }
         }
 
@@ -96,20 +90,18 @@
             }
         }
 
-        mostrarUsuario();
-        <script>
-            function irAlCarrito() {
-                const usuarioId = localStorage.getItem("usuarioId");
-                if (!usuarioId) {
-                    alert("Debes iniciar sesión para ver el carrito.");
-                    return;
-                }
-                window.location.href = "/Productos/ObtenerCarrito?usuarioId=" + usuarioId;
+        function irAlCarrito() {
+            const nombre = localStorage.getItem("usuarioNombre");
+            if (!nombre) {
+                alert("Debes iniciar sesión para ver el carrito.");
+                return;
             }
+            window.location.href = "/Productos/ObtenerCarritoPorNombre?nombre=" + encodeURIComponent(nombre);
+        }
+
+        document.addEventListener("DOMContentLoaded", mostrarUsuario);
     </script>
 
-    </script>
-
-    @await RenderSectionAsync("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

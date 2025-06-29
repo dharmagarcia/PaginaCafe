@@ -48,7 +48,7 @@ else
     </table>
 
     <form id="pedidoForm" method="post">
-        <input type="hidden" id="usuarioIdPedido" name="usuarioId" />
+        <input type="hidden" name="usuarioId" value="@ViewBag.UsuarioId" />
         <button type="submit" class="btn btn-success">Realizar Pedido</button>
     </form>
 }

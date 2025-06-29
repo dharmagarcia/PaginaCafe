@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PaginaCafe.Models
 {
@@ -7,6 +8,8 @@ namespace PaginaCafe.Models
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Email { get; set; }
+
+        [Column("Contraseña")]
         public string Contrasena { get; set; }  // Ojo: guardar hash en producción
 
         // Un usuario puede tener 0 o 1 carrito activo
