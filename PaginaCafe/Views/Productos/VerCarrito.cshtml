@@ -47,16 +47,12 @@ else
         </tfoot>
     </table>
 
-    <form id="pedidoForm" method="post">
+    <form id="pedidoForm" method="post" action="/Productos/RealizarPedido">
         <input type="hidden" name="usuarioId" value="@ViewBag.UsuarioId" />
         <button type="submit" class="btn btn-success">Realizar Pedido</button>
     </form>
+
 }
 
-@section Scripts {
-    <script>
-        // Cargar el ID del usuario en el formulario
-        document.getElementById('usuarioIdPedido').value = localStorage.getItem('usuarioId');
-    </script>
 }
 
