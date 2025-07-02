@@ -35,7 +35,7 @@ namespace PaginaCafe.Controllers
                 usuario = new Usuario
                 {
                     Nombre = request.Nombre,
-                    Contrasena = "default123", // ⚠️ Nunca uses esto en producción
+                    Contrasena = "default123", 
                     Email = $"{request.Nombre.ToLower()}@ejemplo.com"
                 };
                 _context.Usuarios.Add(usuario);
@@ -98,11 +98,11 @@ namespace PaginaCafe.Controllers
             if (usuario == null)
             {
               usuario = new Usuario
-{
-    Nombre = nombre,
-    Contrasena = "default123", // ⚠️ temporal
-    Email = nombre + "@ejemplo.com" // ⚠️ temporal
-};
+                        {
+                     Nombre = nombre,
+                     Contrasena = "default123", // ⚠️ temporal
+                     Email = nombre + "@ejemplo.com" // ⚠️ temporal
+                        };
 
                 _context.Usuarios.Add(usuario);
                 await _context.SaveChangesAsync();
